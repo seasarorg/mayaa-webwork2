@@ -8,13 +8,13 @@ import com.opensymphony.xwork.ActionContext;
 import com.opensymphony.xwork.util.OgnlValueStack;
 
 /**
- * OgnlValueStack‚©‚ç’l‚ğæ“¾‚·‚éAttributeScope‚Å‚·B
+ * OgnlValueStackã‹ã‚‰å€¤ã‚’å–å¾—ã™ã‚‹AttributeScopeã§ã™ã€‚
  */
 public class WebworkValueStackScope extends AbstractReadOnlyAttributeScope {
-	/** ƒVƒŠƒAƒ‹ƒo[ƒWƒ‡ƒ“ID */
+	/** ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ã‚¸ãƒ§ãƒ³ID */
 	private static final long serialVersionUID = -8692027295257276932L;
 
-	/** ƒXƒR[ƒv–¼ */
+	/** ã‚¹ã‚³ãƒ¼ãƒ—å */
 	public static final String SCOPE_NAME = "ww";
 
 	/**
@@ -48,7 +48,7 @@ public class WebworkValueStackScope extends AbstractReadOnlyAttributeScope {
 	}
 
 	/**
-	 * À‘•‚µ‚Ä‚¢‚Ü‚¹‚ñB
+	 * å®Ÿè£…ã—ã¦ã„ã¾ã›ã‚“ã€‚
 	 * 
 	 * @see org.seasar.mayaa.impl.cycle.scope.AbstractReadOnlyAttributeScope#iterateAttributeNames()
 	 */

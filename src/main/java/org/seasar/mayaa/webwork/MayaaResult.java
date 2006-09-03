@@ -19,17 +19,17 @@ import com.opensymphony.xwork.ActionContext;
 import com.opensymphony.xwork.ActionInvocation;
 
 /**
- * Mayaa‚Åˆ—‚ğs‚¤Result‚Å‚·B
+ * Mayaaã§å‡¦ç†ã‚’è¡Œã†Resultã§ã™ã€‚
  */
 public class MayaaResult extends WebWorkResultSupport {
-	/** ƒVƒŠƒAƒ‹ƒo[ƒWƒ‡ƒ“ID */
+	/** ã‚·ãƒªã‚¢ãƒ«ãƒãƒ¼ã‚¸ãƒ§ãƒ³ID */
 	private static final long serialVersionUID = -7752483670104351387L;
 
 	/**
-	 * o—Íˆ—‚ğs‚¢‚Ü‚·B
+	 * å‡ºåŠ›å‡¦ç†ã‚’è¡Œã„ã¾ã™ã€‚
 	 * 
 	 * @param location
-	 *            o—Í‚Ég—p‚·‚éƒtƒ@ƒCƒ‹ƒpƒX
+	 *            å‡ºåŠ›ã«ä½¿ç”¨ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
 	 * @param actionInvocation
 	 *            ActionInvocation
 	 */
@@ -45,14 +45,14 @@ public class MayaaResult extends WebWorkResultSupport {
 
 		if (location != null) {
 			if (location.startsWith("/")) {
-				// â‘ÎƒpƒXw’è
+				// çµ¶å¯¾ãƒ‘ã‚¹æŒ‡å®š
 				request = new MayaResultRequest(request, location);
 			} else {
-				// ‘Š‘ÎƒpƒXw’è
+				// ç›¸å¯¾ãƒ‘ã‚¹æŒ‡å®š
 				request = new MayaResultRequest(request, path + location);
 			}
 		} else {
-			// locationw’è‚ª–³‚¢ê‡‚Íuaction–¼+".html"v
+			// locationæŒ‡å®šãŒç„¡ã„å ´åˆã¯ã€Œactionå+".html"ã€
 			request = new MayaResultRequest(request, path
 					+ ActionContext.getContext().getName() + ".html");
 		}
@@ -79,7 +79,7 @@ public class MayaaResult extends WebWorkResultSupport {
 	}
 
 	/**
-	 * PathInfo‚ğ‹U‘•‚·‚éHttpServletRequest
+	 * PathInfoã‚’å½è£…ã™ã‚‹HttpServletRequest
 	 */
 	public static class MayaResultRequest extends HttpServletRequestWrapper {
 		private String location;
