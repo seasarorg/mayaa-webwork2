@@ -22,79 +22,83 @@ import com.opensymphony.xwork.ActionInvocation;
  * Mayaaで処理を行うResultです。
  */
 public class MayaaResult extends WebWorkResultSupport {
-	/** シリアルバージョンID */
-	private static final long serialVersionUID = -7752483670104351387L;
+    /** シリアルバージョンID */
+    private static final long serialVersionUID = -7752483670104351387L;
 
-	/**
-	 * 出力処理を行います。
-	 * 
-	 * @param location
-	 *            出力に使用するファイルパス
-	 * @param actionInvocation
-	 *            ActionInvocation
-	 */
-	protected void doExecute(String location, ActionInvocation actionInvocation)
-			throws Exception {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		String path = request.getServletPath();
-		if (path.lastIndexOf('/') > 0) {
-			path = path.substring(1, path.lastIndexOf('/') + 1);
-		} else {
-			path = "";
-		}
+    /**
+     * 出力処理を行います。
+     *
+     * @param location
+     *            出力に使用するファイルパス
+     * @param actionInvocation
+     *            ActionInvocation
+     */
+    protected void doExecute(String location, ActionInvocation actionInvocation)
+            throws Exception {
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String path = request.getServletPath();
+        if (path.lastIndexOf('/') > 0) {
+            path = path.substring(0, path.lastIndexOf('/') + 1);
+        } else {
+            path = "/";
+        }
 
-		if (location != null) {
-			if (location.startsWith("/")) {
-				// 絶対パス指定
-				request = new MayaResultRequest(request, location);
-			} else {
-				// 相対パス指定
-				request = new MayaResultRequest(request, path + location);
-			}
-		} else {
-			// location指定が無い場合は「action名+".html"」
-			request = new MayaResultRequest(request, path
-					+ ActionContext.getContext().getName() + ".html");
-		}
+        if (location != null) {
+            if (location.startsWith("/")) {
+                // 絶対パス指定
+                request = new MayaResultRequest(request, location);
+            } else {
+                // 相対パス指定
+                request = new MayaResultRequest(request, path + location);
+            }
+        } else {
+            // location指定が無い場合は「action名+".html"」
+            request = new MayaResultRequest(request, path
+                    + ActionContext.getContext().getName() + ".html");
+        }
 
-		CycleUtil.initialize(request, ServletActionContext.getResponse());
-		Engine engine = ProviderUtil.getEngine();
-		setupCharacterEncoding(ServletActionContext.getRequest(), engine
-				.getParameter("requestCharacterEncoding"));
-		engine.doService(null, true);
-	}
+        CycleUtil.initialize(request, ServletActionContext.getResponse());
+        try {
+            Engine engine = ProviderUtil.getEngine();
+            setupCharacterEncoding(ServletActionContext.getRequest(), engine
+                    .getParameter("requestCharacterEncoding"));
+            engine.doService(null, true);
+        } finally {
+            CycleUtil.cycleFinalize();
+        }
+    }
 
-	protected void setupCharacterEncoding(HttpServletRequest request,
-			String encoding) {
-		if (request.getCharacterEncoding() == null) {
-			try {
-				request.setCharacterEncoding(encoding);
-			} catch (UnsupportedEncodingException e) {
-				String message = StringUtil.getMessage(MayaaServlet.class, 0,
-						encoding);
-				Log log = LogFactory.getLog(MayaaServlet.class);
-				log.warn(message, e);
-			}
-		}
-	}
+    protected void setupCharacterEncoding(HttpServletRequest request,
+            String encoding) {
+        if (request.getCharacterEncoding() == null) {
+            try {
+                request.setCharacterEncoding(encoding);
+            } catch (UnsupportedEncodingException e) {
+                String message = StringUtil.getMessage(MayaaServlet.class, 0,
+                        encoding);
+                Log log = LogFactory.getLog(MayaaServlet.class);
+                log.warn(message, e);
+            }
+        }
+    }
 
-	/**
-	 * PathInfoを偽装するHttpServletRequest
-	 */
-	public static class MayaResultRequest extends HttpServletRequestWrapper {
-		private String location;
+    /**
+     * PathInfoを偽装するHttpServletRequest
+     */
+    public static class MayaResultRequest extends HttpServletRequestWrapper {
+        private String location;
 
-		public MayaResultRequest(HttpServletRequest request, String location) {
-			super(request);
-			this.location = location;
-		}
+        public MayaResultRequest(HttpServletRequest request, String location) {
+            super(request);
+            this.location = location;
+        }
 
-		public String getPathInfo() {
-			return location;
-		}
+        public String getPathInfo() {
+            return location;
+        }
 
-		public String getServletPath() {
-			return "";
-		}
-	}
+        public String getServletPath() {
+            return "";
+        }
+    }
 }
