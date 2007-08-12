@@ -63,14 +63,20 @@
             <url>http://maven.seasar.org/maven2</url>
         </repository>
     </repositories>
-    <distributionManagement>
-        <repository>
-            <uniqueVersion>false</uniqueVersion>
-            <id>maven.seasar.org</id>
-            <name>The Seasar Foundation Maven2 Repository</name>
-            <url>
-                scp://www.seasar.org/home/groups/mayaa/maven/maven2/
-            </url>
-        </repository>
-    </distributionManagement>
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>dav:https://www.seasar.org/maven/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>maven.seasar.org</id>
+			<name>
+				The Seasar Foundation Maven2 Snapshot Repository
+			</name>
+			<url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
